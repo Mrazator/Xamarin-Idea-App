@@ -8,4 +8,10 @@
            VerticalOptions="Center" 
            HorizontalOptions="Center" />
 
+    <Button
+        x:Name="AddItemButton"
+        Text="Add item!"
+        Clicked="AddItemButton_OnClicked" />
+
 </ContentPage>
+

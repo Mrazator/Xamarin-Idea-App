@@ -1,5 +1,8 @@
 #MY IGNORE
 
+#Ignore project downloaded from azure
+PV239-IdeaApp_Xamarin_Forms/
+
 #Ignore generated project
 XamarinProject-Generated/
 

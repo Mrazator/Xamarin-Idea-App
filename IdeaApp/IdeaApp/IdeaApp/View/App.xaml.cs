@@ -20,7 +20,7 @@ namespace IdeaApp
 		{
             InitializeComponent();
 
-			MainPage = new IdeaApp.MainPage();
+			MainPage = new LoginPage();
 		}
 
 		protected override void OnStart ()

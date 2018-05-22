@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdeaApp.Models
+namespace IdeaApp
 {
     public class Ideas
     {

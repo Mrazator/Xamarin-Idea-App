@@ -6,6 +6,9 @@ PV239-IdeaApp_Xamarin_Forms/
 #Ignore generated project
 XamarinProject-Generated/
 
+#Ignore first try project
+IdeaApp/
+
 ##DEFAULT IGNORE
 
 ## Ignore Visual Studio temporary files, build results, and

@@ -1,29 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using IdeaApp.Interfaces;
-using Microsoft.WindowsAzure.MobileServices;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace IdeaApp
+namespace PV239_IdeaApp
 {
-	public partial class App : Application
-	{
-	    public static MobileServiceClient Client;
-	    public static IAuthenticate Authenticator { get; private set; }
+    public interface IAuthenticate
+    {
+        Task<bool> Authenticate();
+    }
 
-        static App()
-	    {
-            Client = new MobileServiceClient("https://pv239-ideaapp.azurewebsites.net");
-        }
+    public class App : Application
+	{
+	    public static IAuthenticate Authenticator { get; private set; }
 
         public App ()
 		{
-            InitializeComponent();
-
-			MainPage = new LoginPage();
+			// The root page of your application
+			MainPage = new IdeaList();
 		}
+
 	    public static void Init(IAuthenticate authenticator)
 	    {
 	        Authenticator = authenticator;
@@ -45,3 +40,4 @@ namespace IdeaApp
 		}
 	}
 }
+

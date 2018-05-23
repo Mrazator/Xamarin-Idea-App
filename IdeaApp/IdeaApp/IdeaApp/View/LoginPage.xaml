@@ -21,4 +21,7 @@
             OnCancel="{Binding OnFacebookLoginCancelCmd}" />
     </StackLayout>
 
+    <Button x:Name="LoginButton" Text="Sign-in" MinimumHeightRequest="30"
+            Clicked="LoginButton_Clicked"/>
+
 </ContentPage>

@@ -1,11 +1,14 @@
 ﻿using System;
 using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json;
+using PV239_IdeaApp.Views;
 
 namespace PV239_IdeaApp
 {
 	public class Ideas
 	{
+        public Type TargetType { get; set; }
+
         [Version]
         public string Version { get; set; }
 
@@ -23,6 +26,11 @@ namespace PV239_IdeaApp
 
 	    [JsonProperty(PropertyName = "UserId")]
         public string UserId { get; set; }
+
+        public Ideas()
+        {
+            TargetType = typeof(IdeaMasterDetailPageDetail);
+        }
     }
 }
 

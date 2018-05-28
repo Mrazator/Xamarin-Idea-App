@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PV239_IdeaApp.Views;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -15,11 +16,13 @@ namespace PV239_IdeaApp
 
         public App ()
 		{
-			// The root page of your application
-			MainPage = new IdeaList();
-		}
+            // The root page of your application
+            //MainPage = new IdeaList();
+            MainPage = new IdeaMasterDetailPage();
 
-	    public static void Init(IAuthenticate authenticator)
+        }
+
+        public static void Init(IAuthenticate authenticator)
 	    {
 	        Authenticator = authenticator;
 	    }

@@ -40,6 +40,16 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Ideas.cs" />
     <Compile Include="IdeaManager.cs" />
+    <Compile Include="Views\IdeaMasterDetailPage.xaml.cs">
+      <DependentUpon>IdeaMasterDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IdeaMasterDetailPageDetail.xaml.cs">
+      <DependentUpon>IdeaMasterDetailPageDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IdeaMasterDetailPageMaster.xaml.cs">
+      <DependentUpon>IdeaMasterDetailPageMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IdeaMasterDetailPageMenuItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -48,6 +58,24 @@
   <ItemGroup>
     <EmbeddedResource Include="IdeaList.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\IdeaMasterDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\IdeaMasterDetailPageMaster.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\IdeaMasterDetailPageDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

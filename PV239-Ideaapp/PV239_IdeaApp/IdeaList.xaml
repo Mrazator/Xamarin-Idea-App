@@ -13,7 +13,7 @@
                        VerticalOptions="Center"
                        IsVisible="False"
                        IsEnabled="True"
-                       x:Name="syncIndicator"/>
+                       x:Name="syncIndicator"/>     
         <StackLayout Grid.Row="0" BackgroundColor="#5ABAFF" Padding="10,30,10,5">
             <Label TextColor="#555555" Text="Azure App Service" />
             <Grid>
@@ -41,7 +41,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.ContextActions>
-                            <MenuItem Clicked="OnMakeFavorite" Text="Complete" CommandParameter="{Binding .}"/>
+                            <!--<MenuItem Clicked="OnViewDetail" Text="Complete" CommandParameter="{Binding .}"/>-->
                         </ViewCell.ContextActions>
                         <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="15,5,0,0">
                             <StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">

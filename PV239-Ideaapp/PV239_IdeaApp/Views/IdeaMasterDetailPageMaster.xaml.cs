@@ -1,19 +1,31 @@
-﻿using PV239_IdeaApp.Views;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
+
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
-namespace PV239_IdeaApp
+namespace PV239_IdeaApp.Views
 {
-    public partial class IdeaList : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class IdeaMasterDetailPageMaster : ContentPage
     {
-        private readonly IdeaManager _manager;
-        // Track whether the user has authenticated.
-        bool _authenticated = false;
+        public ListView ListView;
 
-        public IdeaList()
+        private readonly IdeaManager _manager;
+        private bool _IsAuthenticated = false;
+
+        public IdeaMasterDetailPageMaster()
         {
             InitializeComponent();
+
+            BindingContext = new IdeaMasterDetailPageMasterViewModel();
+            ListView = MenuItemsListView;
 
             _manager = IdeaManager.DefaultManager;
 
@@ -31,34 +43,17 @@ namespace PV239_IdeaApp
             }
         }
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-
-            // Refresh items only when authenticated.
-            if (_authenticated == true)
-            {
-                // Set syncItems to true in order to synchronize the data
-                // on startup when running in offline mode.
-                await RefreshItems(true, syncItems: false);
-
-                // Hide the Sign-in button.
-                this.LoginButton.IsVisible = false;
-            }
-        }
-
-        // Data methods
         async Task AddItem(Ideas item)
         {
             await _manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await _manager.GetTodoItemsAsync();
+            MenuItemsListView.ItemsSource = await _manager.GetTodoItemsAsync();
         }
 
         async Task MakeFavoriteItem(Ideas item)
         {
             item.IsFavorite = true;
             await _manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await _manager.GetTodoItemsAsync();
+            MenuItemsListView.ItemsSource = await _manager.GetTodoItemsAsync();
         }
 
         public async void OnAdd(object sender, EventArgs e)
@@ -70,49 +65,22 @@ namespace PV239_IdeaApp
             newItemName.Unfocus();
         }
 
-        // Event handlers
-        public async void OnSelected(object sender, SelectedItemChangedEventArgs e)
+        protected override async void OnAppearing()
         {
-            //if (Device.OS != TargetPlatform.iOS && e.SelectedItem is Ideas todo)
-            //{
-            //    // Not iOS - the swipe-to-delete is discoverable there
-            //    if (Device.OS == TargetPlatform.Android)
-            //    {
-            //        await DisplayAlert(todo.Name, "Press-and-hold to make favorite this task " + todo.Name, "Got it!");
-            //    }
-            //    else
-            //    {
-            //        // Windows, not all platforms support the Context Actions yet
-            //        if (await DisplayAlert("Mark favorite?", "Do you wish to complete " + todo.Name + "?", "Complete", "Cancel"))
-            //        {
-            //            await MakeFavoriteItem(todo);
-            //        }
-            //    }
-            //}
-            if (e.SelectedItem != null)
+            base.OnAppearing();
+
+            // Refresh items only when authenticated.
+            if (_IsAuthenticated == true)
             {
-                var idea = (Ideas)e.SelectedItem;
-                NavigationPage detailPage = new NavigationPage(new ContentPage());
-                //await Navigation.PushAsync(detailPage);
+                // Set syncItems to true in order to synchronize the data
+                // on startup when running in offline mode.
+                await RefreshItems(true, syncItems: false);
+
+                // Hide the Sign-in button.
+                this.LoginButton.IsVisible = false;
             }
-            todoList.SelectedItem = null;
         }
 
-        // http://developer.xamarin.com/guides/cross-platform/xamarin-forms/working-with/listview/#context
-        public async void OnMakeFavorite(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-            var todo = mi.CommandParameter as Ideas;
-            await MakeFavoriteItem(todo);
-        }
-
-        public void OnViewDetail(object sender, EventArgs e)
-        {
-            var idea = (Ideas) todoList.SelectedItem;
-            NavigationPage detailPage = new NavigationPage(new ContentPage());
-        }
-
-        // http://developer.xamarin.com/guides/cross-platform/xamarin-forms/working-with/listview/#pulltorefresh
         public async void OnRefresh(object sender, EventArgs e)
         {
             var list = (ListView)sender;
@@ -145,8 +113,18 @@ namespace PV239_IdeaApp
         {
             using (var scope = new ActivityIndicatorScope(syncIndicator, showActivityIndicator))
             {
-                todoList.ItemsSource = await _manager.GetTodoItemsAsync(syncItems);
+                MenuItemsListView.ItemsSource = await _manager.GetTodoItemsAsync(syncItems);
             }
+        }
+
+        private async void LoginButton_OnClicked(object sender, EventArgs e)
+        {
+            if (App.Authenticator != null)
+                _IsAuthenticated = await App.Authenticator.Authenticate();
+
+            // Set syncItems to true to synchronize the data on startup when offline is enabled.
+            if (_IsAuthenticated == true)
+                await RefreshItems(true, syncItems: false);
         }
 
         private class ActivityIndicatorScope : IDisposable
@@ -186,15 +164,34 @@ namespace PV239_IdeaApp
             }
         }
 
-        private async void LoginButton_OnClicked(object sender, EventArgs e)
+        class IdeaMasterDetailPageMasterViewModel : INotifyPropertyChanged
         {
-            if (App.Authenticator != null)
-                _authenticated = await App.Authenticator.Authenticate();
+            public ObservableCollection<Ideas> MenuItems { get; set; }
 
-            // Set syncItems to true to synchronize the data on startup when offline is enabled.
-            if (_authenticated == true)
-                await RefreshItems(true, syncItems: false);
+            private readonly IdeaManager _manager;
+
+            public IdeaMasterDetailPageMasterViewModel()
+            {
+                _manager = IdeaManager.DefaultManager;
+
+                GetMenuItems();
+            }
+
+            public async Task GetMenuItems()
+            {
+                MenuItems = await _manager.GetTodoItemsAsync();
+            }
+
+            #region INotifyPropertyChanged Implementation
+            public event PropertyChangedEventHandler PropertyChanged;
+            void OnPropertyChanged([CallerMemberName] string propertyName = "")
+            {
+                if (PropertyChanged == null)
+                    return;
+
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            #endregion
         }
     }
 }
-

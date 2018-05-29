@@ -29,9 +29,10 @@
                         <Entry x:Name="newItemName"
                             Placeholder="Item name" />
                         <StackLayout x:Name="buttonsPanel" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                            <Button Text="+"
+                            <Button x:Name="AddButton" 
+                                Text="+"
                                 MinimumHeightRequest="30"
-                                Clicked="OnAdd" />
+                                Clicked="AddButton_Clicked" />
                             <Button x:Name="LoginButton" Text="Sign-in" 
                                 MinimumHeightRequest="30"
                                 Clicked="LoginButton_OnClicked"/>
@@ -43,9 +44,9 @@
                         <ViewCell>
                             <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
                                 <Label VerticalOptions="FillAndExpand" 
-                    VerticalTextAlignment="Center" 
-                    Text="{Binding Name}" 
-                    FontSize="24"/>
+                                        VerticalTextAlignment="Center" 
+                                        Text="{Binding Name}" 
+                                        FontSize="24"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

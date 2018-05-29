@@ -94,6 +94,7 @@ namespace PV239_IdeaApp
                 var idea = (Ideas)e.SelectedItem;
                 NavigationPage detailPage = new NavigationPage(new ContentPage());
                 //await Navigation.PushAsync(detailPage);
+                
             }
             todoList.SelectedItem = null;
         }

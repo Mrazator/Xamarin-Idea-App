@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -109,7 +109,7 @@ namespace PV239_IdeaApp.Views
             await RefreshItems(true, true);
         }
 
-        private async Task RefreshItems(bool showActivityIndicator, bool syncItems)
+        public async Task RefreshItems(bool showActivityIndicator, bool syncItems)
         {
             using (var scope = new ActivityIndicatorScope(syncIndicator, showActivityIndicator))
             {
@@ -125,6 +125,12 @@ namespace PV239_IdeaApp.Views
             // Set syncItems to true to synchronize the data on startup when offline is enabled.
             if (_IsAuthenticated == true)
                 await RefreshItems(true, syncItems: false);
+        }
+
+        private void AddButton_Clicked(object sender, EventArgs e)
+        {
+            var addPage = new AddPage();
+            ((IdeaMasterDetailPage)App.Current.MainPage).NavigateTo(addPage);
         }
 
         private class ActivityIndicatorScope : IDisposable

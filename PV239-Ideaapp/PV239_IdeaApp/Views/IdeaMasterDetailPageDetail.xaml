@@ -3,7 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PV239_IdeaApp.Views.IdeaMasterDetailPageDetail"
              Title="Detail">
-  <StackLayout Padding="10">
-    <Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>
-  </StackLayout>
+    <StackLayout Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackLayout x:Name="buttonsPanel"
+                         Grid.Column="1"
+                         Orientation="Horizontal"
+                         HorizontalOptions="StartAndExpand"
+                         BackgroundColor="Gray">
+                <Button x:Name="EditButton"
+                        Text="Edit" 
+                        MinimumHeightRequest="30"
+                        Clicked="EditButton_Clicked"/>
+            </StackLayout>
+        </Grid>
+        <Label Text="Idea" FontSize="Large"/>
+        <Label Text="{Binding Idea.Name}" FontSize="Medium"/>
+        <Label Text="Description" FontSize="Large"/>
+        <Label Text="{Binding Idea.Description}" FontSize="Medium"/>
+    </StackLayout>
 </ContentPage>

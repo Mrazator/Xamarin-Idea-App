@@ -16,6 +16,21 @@ namespace PV239_IdeaApp.Views
         {
             InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
+
+            IsPresented = true;
+        }
+
+        public void NavigateTo(ContentPage page)
+        {
+            Detail = new NavigationPage(page);
+            IsPresented = false;
+        }
+
+        public async Task NavigateHome()
+        {
+            IsPresented = true;
+            var masterPage = (IdeaMasterDetailPageMaster) Master;
+            await masterPage.RefreshItems(true, true);
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -24,7 +39,8 @@ namespace PV239_IdeaApp.Views
             if (item == null)
                 return;
 
-            var page = (Page)Activator.CreateInstance(item.TargetType);
+            //var page = (Page)Activator.CreateInstance(item.TargetType);
+            var page = new IdeaMasterDetailPageDetail(item);
             page.Title = item.Name;
 
             Detail = new NavigationPage(page);

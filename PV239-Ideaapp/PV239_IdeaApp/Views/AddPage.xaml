@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PV239_IdeaApp.Views.AddPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout x:Name="buttonsPanel"
+                         Grid.Column="1"
+                         Orientation="Horizontal"
+                         HorizontalOptions="StartAndExpand"
+                         BackgroundColor="DimGray">
+                    <Button x:Name="AddButton"
+                        Text="Add" 
+                        MinimumHeightRequest="30"
+                        Clicked="AddButton_Clicked"/>
+                </StackLayout>
+            </Grid>
+            <Label Text="Idea" FontSize="Large"/>
+            <Entry x:Name="newIdeaName"                 
+                  Placeholder="Idea Name" />
+            <Label Text="Description" FontSize="Large"/>
+            <Entry x:Name="newIdeaDescription"
+                  Placeholder="Idea Description}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

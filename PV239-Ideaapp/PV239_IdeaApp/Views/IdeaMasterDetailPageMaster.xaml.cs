@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,6 +19,8 @@ namespace PV239_IdeaApp.Views
 
         private readonly IdeaManager _manager;
         private bool _IsAuthenticated = false;
+        public readonly string NonFavIconPath = "NonFavorite.png";
+        public readonly string FavIconPath = "Favorite.png";
 
         public IdeaMasterDetailPageMaster()
         {
@@ -56,14 +58,14 @@ namespace PV239_IdeaApp.Views
             MenuItemsListView.ItemsSource = await _manager.GetTodoItemsAsync();
         }
 
-        public async void OnAdd(object sender, EventArgs e)
-        {
-            var todo = new Ideas { Name = newItemName.Text };
-            await AddItem(todo);
+        //public async void OnAdd(object sender, EventArgs e)
+        //{
+        //    var todo = new Ideas { Name = newItemName.Text };
+        //    await AddItem(todo);
 
-            newItemName.Text = string.Empty;
-            newItemName.Unfocus();
-        }
+        //    newItemName.Text = string.Empty;
+        //    newItemName.Unfocus();
+        //}
 
         protected override async void OnAppearing()
         {
@@ -170,9 +172,10 @@ namespace PV239_IdeaApp.Views
             }
         }
 
-        class IdeaMasterDetailPageMasterViewModel : INotifyPropertyChanged
+        public class IdeaMasterDetailPageMasterViewModel : INotifyPropertyChanged
         {
             public ObservableCollection<Ideas> MenuItems { get; set; }
+            public ICommand IdeaPreferenceCommand { get; private set; }
 
             private readonly IdeaManager _manager;
 
@@ -181,11 +184,18 @@ namespace PV239_IdeaApp.Views
                 _manager = IdeaManager.DefaultManager;
 
                 GetMenuItems();
+                IdeaPreferenceCommand = new Command<Ideas>(ChangePreference);
             }
 
             public async Task GetMenuItems()
             {
                 MenuItems = await _manager.GetTodoItemsAsync();
+            }
+
+            public void ChangePreference(Ideas idea)
+            {
+                idea.IsFavorite = !idea.IsFavorite;
+                _manager.SaveTaskAsync(idea);
             }
 
             #region INotifyPropertyChanged Implementation

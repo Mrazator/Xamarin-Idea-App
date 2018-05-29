@@ -27,6 +27,7 @@ namespace PV239_IdeaApp.Views
 
             idea.Name = newIdeaName.Text;
             idea.Description = newIdeaDescription.Text;
+            idea.IsFavorite = false;
 
             await AddIdea(idea);
 

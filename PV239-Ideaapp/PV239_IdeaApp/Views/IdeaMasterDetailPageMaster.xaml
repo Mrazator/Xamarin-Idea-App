@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PV239_IdeaApp.Views.IdeaMasterDetailPageMaster"
+             x:Name="MasterDetailMasterPage"
+             Icon="NonFavorite.png"
              Title="Master">
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
@@ -26,8 +28,6 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Entry x:Name="newItemName"
-                            Placeholder="Item name" />
                         <StackLayout x:Name="buttonsPanel" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
                             <Button x:Name="AddButton" 
                                 Text="+"
@@ -47,6 +47,12 @@
                                         VerticalTextAlignment="Center" 
                                         Text="{Binding Name}" 
                                         FontSize="24"/>
+                                <Button x:Name="FavoriteButton"
+                                        Text="Has image"
+                                        Image="{Binding NonFavIconPath}"
+                                        Command="{Binding Source={x:Reference MasterDetailMasterPage},
+                                                          Path=BindingContext.IdeaPreferenceCommand}"
+                                        CommandParameter="{Binding .}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

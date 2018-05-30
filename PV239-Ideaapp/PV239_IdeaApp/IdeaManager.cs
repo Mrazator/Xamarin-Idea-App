@@ -97,6 +97,11 @@ namespace PV239_IdeaApp
             }
         }
 
+        public async Task DeleteIdeaAsync(Ideas item)
+        {
+            await _ideaTable.DeleteAsync(item);
+        }
+
 #if OFFLINE_SYNC_ENABLED
         public async Task SyncAsync()
         {

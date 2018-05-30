@@ -31,6 +31,7 @@ namespace PV239_IdeaApp.Views
             IsPresented = true;
             var masterPage = (IdeaMasterDetailPageMaster) Master;
             await masterPage.RefreshItems(true, true);
+            Detail = new NavigationPage(new ContentPage());
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

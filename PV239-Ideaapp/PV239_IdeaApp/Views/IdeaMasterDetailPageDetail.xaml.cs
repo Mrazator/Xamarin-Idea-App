@@ -15,6 +15,7 @@ namespace PV239_IdeaApp.Views
     public partial class IdeaMasterDetailPageDetail : ContentPage
     {
         public Ideas Idea { get; set; }
+        private readonly IdeaManager _manager;
 
         public IdeaMasterDetailPageDetail()
         {
@@ -25,6 +26,7 @@ namespace PV239_IdeaApp.Views
         {
             InitializeComponent();
 
+            _manager = IdeaManager.DefaultManager;
             Idea = idea;
             BindingContext = new IdeaMasterDetailPageDetailViewModel(idea);
         }
@@ -34,17 +36,25 @@ namespace PV239_IdeaApp.Views
             var editPage = new EditPage(Idea);
             ((IdeaMasterDetailPage)App.Current.MainPage).NavigateTo(editPage);
         }
+
+        private async Task DeleteButton_Clicked(object sender, EventArgs e)
+        {
+            var answer = await DisplayAlert("Delete", "Do you wan't to delete this idea?", "Yes", "No");
+            if (answer)
+            {
+                await _manager.DeleteIdeaAsync(Idea);
+                await ((IdeaMasterDetailPage)App.Current.MainPage).NavigateHome();
+            }
+            
+        }
     }
 
     class IdeaMasterDetailPageDetailViewModel : INotifyPropertyChanged
     {
         public Ideas Idea { get; set; }
 
-        private readonly IdeaManager _manager;
-
         public IdeaMasterDetailPageDetailViewModel(Ideas idea)
         {
-            _manager = IdeaManager.DefaultManager;
             Idea = idea;            
         }
 

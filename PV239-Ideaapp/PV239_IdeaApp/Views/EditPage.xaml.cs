@@ -35,7 +35,7 @@ namespace PV239_IdeaApp.Views
 
             await UpdateIdea(Idea);
 
-            ((IdeaMasterDetailPage) App.Current.MainPage).NavigateHome();
+            await ((IdeaMasterDetailPage) App.Current.MainPage).NavigateHome();
         }
 
         private async Task UpdateIdea(Ideas idea)

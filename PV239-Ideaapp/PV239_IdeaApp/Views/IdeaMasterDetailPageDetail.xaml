@@ -14,6 +14,10 @@
                          Orientation="Horizontal"
                          HorizontalOptions="StartAndExpand"
                          BackgroundColor="Gray">
+                <Button x:Name="DeleteButton"
+                        Text="Delete"
+                        MinimumHeightRequest="30"
+                        Clicked="DeleteButton_Clicked"/>
                 <Button x:Name="EditButton"
                         Text="Edit" 
                         MinimumHeightRequest="30"

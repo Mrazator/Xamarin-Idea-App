@@ -34,11 +34,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="IdeaList.xaml.cs">
+    <Compile Include="Views\IdeaList.xaml.cs">
       <DependentUpon>IdeaList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="Ideas.cs" />
     <Compile Include="IdeaManager.cs" />
     <Compile Include="Views\AddPage.xaml.cs">
       <DependentUpon>AddPage.xaml</DependentUpon>
@@ -46,42 +45,18 @@
     <Compile Include="Views\EditPage.xaml.cs">
       <DependentUpon>EditPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IdeaMasterDetailPage.xaml.cs">
-      <DependentUpon>IdeaMasterDetailPage.xaml</DependentUpon>
+    <Compile Include="ViewModel\Idea.cs" />
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IdeaMasterDetailPageDetail.xaml.cs">
-      <DependentUpon>IdeaMasterDetailPageDetail.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IdeaMasterDetailPageMaster.xaml.cs">
-      <DependentUpon>IdeaMasterDetailPageMaster.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IdeaMasterDetailPageMenuItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="IdeaList.xaml">
+    <EmbeddedResource Include="Views\IdeaList.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\IdeaMasterDetailPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\IdeaMasterDetailPageMaster.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\IdeaMasterDetailPageDetail.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -95,5 +70,14 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\facebook.png" />
   </ItemGroup>
 </Project>

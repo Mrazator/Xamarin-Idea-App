@@ -12,14 +12,14 @@ namespace PV239_IdeaApp
 
     public class App : Application
 	{
-	    public static IAuthenticate Authenticator { get; private set; }
+	    public static bool IsAuthenticated { get; set; } = false;
+
+        public static IAuthenticate Authenticator { get; private set; }
 
         public App ()
 		{
             // The root page of your application
-            //MainPage = new IdeaList();
-            MainPage = new IdeaMasterDetailPage();
-
+            MainPage = IsAuthenticated ? (ContentPage) new IdeaList() : new LoginPage();
         }
 
         public static void Init(IAuthenticate authenticator)

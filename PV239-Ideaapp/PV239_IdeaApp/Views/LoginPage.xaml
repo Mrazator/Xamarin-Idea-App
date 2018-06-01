@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PV239_IdeaApp.Views.LoginPage"
+             BackgroundColor="White">
+
+    <StackLayout 
+        HorizontalOptions="CenterAndExpand"
+        VerticalOptions="StartAndExpand"
+     >
+        <Label 
+            Text="Idea app"
+            FontSize="32"
+            FontAttributes="Bold"
+            Margin="0, 50, 0, 0"
+            HorizontalOptions="Center"
+        />
+        <Label 
+            Text="Please login"
+            HorizontalOptions="Center"
+            Margin="0, 80, 0, 0"
+        />
+        <Image 
+            x:Name="LoginButton"
+            Source="facebook.png"
+            Aspect="AspectFill"
+            Scale="0.3" 
+            Margin="0, -90, 0, 0"
+         >
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="LoginButton_OnClicked" />
+            </Image.GestureRecognizers>
+        </Image>
+    </StackLayout>
+</ContentPage>

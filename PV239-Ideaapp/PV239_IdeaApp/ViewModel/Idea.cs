@@ -1,22 +1,21 @@
-﻿using Microsoft.WindowsAzure.MobileServices;
+﻿using System;
+using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PV239_IdeaApp.Views;
 
-namespace PV239_IdeaApp.Views
+namespace PV239_IdeaApp.ViewModel
 {
 
-    public class IdeaMasterDetailPageMenuItem
+    public class Ideas
     {
         public Type TargetType { get; set; }
 
         [Version]
         public string Version { get; set; }
 
-        [JsonProperty(PropertyName = "id")]
+        public string FavoriteImg => IsFavorite ? "favorite.png" : "notfavorite.png";
+
+        [JsonProperty(PropertyName = "Id")]
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "Name")]
@@ -31,9 +30,9 @@ namespace PV239_IdeaApp.Views
         [JsonProperty(PropertyName = "UserId")]
         public string UserId { get; set; }
 
-        public IdeaMasterDetailPageMenuItem()
+        public Ideas()
         {
-            TargetType = typeof(IdeaMasterDetailPageDetail);
+            TargetType = typeof(IdeaList);
         }       
     }
 }

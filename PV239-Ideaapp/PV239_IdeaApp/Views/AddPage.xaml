@@ -3,29 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PV239_IdeaApp.Views.AddPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Grid.Row="0" BackgroundColor="White" Padding="10,30,10,5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <StackLayout x:Name="buttonsPanel"
-                         Grid.Column="1"
-                         Orientation="Horizontal"
-                         HorizontalOptions="StartAndExpand"
-                         BackgroundColor="DimGray">
-                    <Button x:Name="AddButton"
-                        Text="Add" 
-                        MinimumHeightRequest="30"
-                        Clicked="AddButton_Clicked"/>
+                <Label TextColor="#555555" Text="Add" FontSize="32" FontAttributes="Bold"/>
+                <StackLayout x:Name="buttonsPanel" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                    <Button Text="+"
+                            MinimumHeightRequest="30"
+                            Clicked="AddButton_Clicked" />
                 </StackLayout>
             </Grid>
-            <Label Text="Idea" FontSize="Large"/>
-            <Entry x:Name="newIdeaName"                 
-                  Placeholder="Idea Name" />
-            <Label Text="Description" FontSize="Large"/>
-            <Entry x:Name="newIdeaDescription"
-                  Placeholder="Idea Description}" />
+            <StackLayout>
+                <Label Text="Name"/>
+                <Entry x:Name="newIdeaName" />
+                <Label Text="Description"/>
+                <Editor x:Name="newIdeaDescription"
+                       HeightRequest="150"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

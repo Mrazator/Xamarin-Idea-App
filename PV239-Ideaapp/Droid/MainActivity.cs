@@ -9,7 +9,7 @@ using Android.Widget;
 using Android.OS;
 
 using Microsoft.WindowsAzure.MobileServices;
-
+using PV239_IdeaApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -24,7 +24,6 @@ namespace PV239_IdeaApp.Droid
 	public class MainActivity : FormsApplicationActivity, IAuthenticate
     {
         // Define a authenticated user.
-        private MobileServiceUser _user;
 
         protected override void OnCreate (Bundle bundle)
 		{
@@ -50,12 +49,11 @@ namespace PV239_IdeaApp.Droid
             try
             {
                 // Sign in with Facebook login using a server-managed flow.
-                _user = await IdeaManager.DefaultManager.CurrentClient.LoginAsync(this,
+                IdeaManager.User = await IdeaManager.DefaultManager.CurrentClient.LoginAsync(this,
                     MobileServiceAuthenticationProvider.Facebook, "pv239-ideaapp");
-                if (_user != null)
+                if (IdeaManager.User != null)
                 {
-                    message = string.Format("you are now signed-in as {0}.",
-                        _user.UserId);
+                    message = $"You are now successfully signed-in";
                     success = true;
                 }
             }
@@ -65,7 +63,7 @@ namespace PV239_IdeaApp.Droid
             }
 
             // Display the success or failure message.
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            var builder = new AlertDialog.Builder(this);
             builder.SetMessage(message);
             builder.SetTitle("Sign-in result");
             builder.Create().Show();

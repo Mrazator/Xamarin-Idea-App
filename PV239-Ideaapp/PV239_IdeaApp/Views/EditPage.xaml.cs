@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using PV239_IdeaApp.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,9 +14,8 @@ namespace PV239_IdeaApp.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditPage : ContentPage
 	{
-        public Ideas Idea { get; private set; }
-
         private readonly IdeaManager _manager;
+	    private readonly Ideas _idea;
 
         public EditPage(Ideas idea)
 		{
@@ -24,28 +23,25 @@ namespace PV239_IdeaApp.Views
 
             _manager = IdeaManager.DefaultManager;
 
-            Idea = idea;
+		    _idea = idea;
+		    newIdeaName.Text = idea.Name;
+		    newIdeaDescription.Text = idea.Description;
             BindingContext = new EditPageViewModel(idea);
 		}
 
-        private async Task ConfirmButton_Clicked(object sender, EventArgs e)
+        private async void EditButton_Clicked(object sender, EventArgs e)
         {
-            Idea.Name = newIdeaName.Text;
-            Idea.Description = newIdeaDescription.Text;
+            _idea.Name = newIdeaName.Text;
+            _idea.Description = newIdeaDescription.Text;
 
-            await UpdateIdea(Idea);
-
-            await ((IdeaMasterDetailPage) App.Current.MainPage).NavigateHome();
+            await _manager.UpdateIdeaAsync(_idea);
+            await Navigation.PopModalAsync();
         }
 
-        private async Task UpdateIdea(Ideas idea)
-        {
-            await _manager.SaveTaskAsync(idea);
-        }
 
         class EditPageViewModel : INotifyPropertyChanged
         {
-            public Ideas Idea { get; set; }
+            private Ideas Idea { get; set; }
 
             public EditPageViewModel(Ideas idea)
             {
@@ -56,10 +52,7 @@ namespace PV239_IdeaApp.Views
             public event PropertyChangedEventHandler PropertyChanged;
             void OnPropertyChanged([CallerMemberName] string propertyName = "")
             {
-                if (PropertyChanged == null)
-                    return;
-
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             #endregion
         }

@@ -2,10 +2,10 @@
 
 namespace PV239_IdeaApp
 {
-	public static class Constants
+	public class Constants
 	{
-		// Replace strings with your Azure Mobile App endpoint.
-		public static string ApplicationURL = @"https://pv239-ideaapp.azurewebsites.net";
+        // azure mobile end point
+		public static string ApplicationUrl = @"https://pv239-ideaapp.azurewebsites.net";
 	}
 }
 

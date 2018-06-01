@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.MobileServices;
+using PV239_IdeaApp.ViewModel;
 using PV239_IdeaApp.Views;
 
 #if OFFLINE_SYNC_ENABLED
@@ -28,22 +29,23 @@ namespace PV239_IdeaApp
     {
         private readonly MobileServiceClient _client;
         public static IdeaManager DefaultManager { get; private set; } = new IdeaManager();
+        public static MobileServiceUser User;
 
         public MobileServiceClient CurrentClient => _client;
 
+#if OFFLINE_SYNC_ENABLED
         public bool IsOfflineEnabled => _ideaTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<Ideas>;
 
-#if OFFLINE_SYNC_ENABLED
         IMobileServiceSyncTable<TodoItem> todoTable;
+
+        const string offlineDbPath = @"localstore.db";
 #else
         private readonly IMobileServiceTable<Ideas> _ideaTable;
 #endif
 
-        const string offlineDbPath = @"localstore.db";
-
         private IdeaManager()
         {
-            this._client = new MobileServiceClient(Constants.ApplicationURL);
+            this._client = new MobileServiceClient(Constants.ApplicationUrl);
 
 #if OFFLINE_SYNC_ENABLED
             var store = new MobileServiceSQLiteStore(offlineDbPath);
@@ -69,7 +71,7 @@ namespace PV239_IdeaApp
                 }
 #endif
                 IEnumerable<Ideas> items = await _ideaTable
-                    //.Where(todoItem => !todoItem.Done)
+                        .Where(x => x.UserId == User.UserId)
                     .ToEnumerableAsync();
 
                 return new ObservableCollection<Ideas>(items);
@@ -87,19 +89,17 @@ namespace PV239_IdeaApp
 
         public async Task SaveTaskAsync(Ideas item)
         {
-            if (item.Id == null)
-            {
-                await _ideaTable.InsertAsync(item);
-            }
-            else
-            {
-                await _ideaTable.UpdateAsync(item);
-            }
+            await _ideaTable.InsertAsync(item);
         }
 
         public async Task DeleteIdeaAsync(Ideas item)
         {
             await _ideaTable.DeleteAsync(item);
+        }
+
+        public async Task UpdateIdeaAsync(Ideas item)
+        {
+            await _ideaTable.UpdateAsync(item);
         }
 
 #if OFFLINE_SYNC_ENABLED

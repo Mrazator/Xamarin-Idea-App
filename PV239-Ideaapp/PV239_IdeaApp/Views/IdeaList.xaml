@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage 	xmlns="http://xamarin.com/schemas/2014/forms" 
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-				x:Class="PV239_IdeaApp.IdeaList"
+				x:Class="PV239_IdeaApp.Views.IdeaList"
 				Title="Azure Todo">
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
@@ -13,39 +13,45 @@
                        VerticalOptions="Center"
                        IsVisible="False"
                        IsEnabled="True"
-                       x:Name="syncIndicator"/>     
-        <StackLayout Grid.Row="0" BackgroundColor="#5ABAFF" Padding="10,30,10,5">
-            <Label TextColor="#555555" Text="Azure App Service" />
+                       x:Name="syncIndicator"/>
+        <StackLayout Grid.Row="0" BackgroundColor="White" Padding="10,30,10,5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Entry x:Name="newItemName"
-                  Placeholder="Item name" />
+            <Label TextColor="#555555" Text="Ideas" FontSize="32" FontAttributes="Bold"/>
                 <StackLayout x:Name="buttonsPanel" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
                     <Button Text="+"
                   MinimumHeightRequest="30"
                   Clicked="OnAdd" />
-
-                    <Button x:Name="LoginButton" Text="Sign-in" MinimumHeightRequest="30"
-                            Clicked="LoginButton_OnClicked"/>
                 </StackLayout>
             </Grid>
         </StackLayout>
-        <ListView x:Name="todoList"
+        <ListView x:Name="Ideas"
 				ItemSelected="OnSelected"
 				IsPullToRefreshEnabled="true" Refreshing="OnRefresh"
-				Grid.Row="1">
+				Grid.Row="1"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.ContextActions>
-                            <!--<MenuItem Clicked="OnViewDetail" Text="Complete" CommandParameter="{Binding .}"/>-->
+                            <MenuItem Clicked="OnMakeFavorite" Text="Un/make favorite" CommandParameter="{Binding .}"/>
+                            <MenuItem Clicked="OnDelete" Text="Delete" CommandParameter="{Binding .}"/>
+                            <MenuItem Clicked="OnEdit" Text="Edit" CommandParameter="{Binding .}"/>
                         </ViewCell.ContextActions>
-                        <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="15,5,0,0">
-                            <StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
-                                <Label Text="{Binding Name}"  />
+                        <StackLayout Orientation="Horizontal" Padding="10, 5, 10, 5">
+                            <Image Source="{Binding FavoriteImg}" WidthRequest="20"/>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding Name}"
+                                        TextColor="DodgerBlue" />
+                                <Label Text="{Binding Description}"
+                                        TextColor="LightGray"
+                                        Margin="0, 0, 0, 0"
+                                       />
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>
